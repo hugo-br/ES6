@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  <!-- <script src='ES5-compile.js'/></script>    -->
+ 
+<script>
+// ES6
+    
+//////////////
+/// SYNTAX ///    
+/////////////
+    
+    
+// use let when you plan to reassign new values to a variable, and
+// use const when you don’t plan on reassigning new values to a variable.
+    
+function getClothing(isCold) {
+  if (isCold) {
+    const freezing = 'Grab a jacket!';
+  } else {
+    const hot = 'It’s a shorts kind of day.';
+    console.log(freezing);
+  }
+}    
+    
+   
+let instructor = 'James';
+instructor = 'Richard';
+console.log(instructor);
+    
+const CHARACTER_LIMIT = 255;
+const posts = [
+	"#DeepLearning transforms everything from self-driving cars to language translations. AND it's our new Nanodegree!",
+	"Within your first week of the VR Developer Nanodegree Program, you'll make your own virtual reality app",
+	"I just finished @udacity's Front-End Web Developer Nanodegree. Check it out!"
+];
+
+// loop i
+function displayPosts() {
+	for (let i = 0; i < posts.length; i++) {
+		console.log(posts[i].slice(0, CHARACTER_LIMIT));
+	}
+}
+
+displayPosts();  
+    
+    
+    
+/*
+ * New way of concat
+ */
+
+const myName = 'hugo';
+const greeting = `Hello, my name is ${myName}`;
+console.log(greeting);   
+    
+    
+    
+/*
+ *Build an HTML Fragment (1-2)
+ */
+
+const cheetah = {
+    name: 'Cheetah',
+    scientificName: 'Acinonyx jubatus',
+    lifespan: '10-12 years',
+    speed: '68-75 mph',
+    diet: 'carnivore',
+    summary: 'Fastest mammal on land, the cheetah can reach speeds of 60 or perhaps even 70 miles (97 or 113 kilometers) an hour over short distances. It usually chases its prey at only about half that speed, however. After a chase, a cheetah needs half an hour to catch its breath before it can eat.',
+    fact: 'Cheetahs have “tear marks” that run from the inside corners of their eyes down to the outside edges of their mouth.'
+};
+    
+// creates an animal trading card
+function createAnimalTradingCardHTML(animal) {
+    const cardHTML = `<div class='card'>
+        <h3 class='name'> ${animal.name} </h3>
+        <img src='${animal.name}.jpg' alt='${animal.name}' class='picture'>
+        <div class='description'>
+            <p class='fact'> ${animal.fact} </p>
+            <ul class='details'>
+                <li><span class='bold'>Scientific Name</span>:  ${animal.scientificName} </li>
+                <li><span class='bold'>Average Lifespan</span>:  ${animal.lifespan} </li>
+                <li><span class='bold'>Average Speed</span>:  ${animal.speed} </li>
+                <li><span class='bold'>Diet</span>:  ${animal.diet} </li>
+            </ul>
+            <p class='brief'> ${animal.summary} </p>
+        </div>
+    </div>`;
+
+    return cardHTML;
+}
+
+console.log(createAnimalTradingCardHTML(cheetah));   
+    
+// Destructuring values from an array    
+const point = [10, 25, -34];
+const [x, y, z] = point;
+console.log(x, y, z);    
+
+    
+// for of loop    
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+for (let digit of digits) {
+  console.log(digit);
+}
+    
+const digitsTwo = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+for (const digitTwo of digitsTwo) {
+  if (digitTwo % 2 === 0) {
+    continue;
+  }
+  console.log(digitTwo);
+}    
+    
+const fruits = ["apples", "bananas", "pears"];
+const vegetables = ["corn", "potatoes", "carrots"];
+const produce = new Set([fruits, vegetables]);
+console.log(...produce); 
+    
+
+function average(...nums) {
+ let total = 0;  
+ const nb = nums.length;
+  for(const num of nums) {
+    total += num;
+  }
+    if(nb > 0){
+        return total/nb;
+    } else {
+        return 0;
+    }  
+}
+
+console.log(average(2, 6));
+console.log(average(2, 3, 3, 5, 7, 10));
+console.log(average(7, 1432, 12, 13, 100));
+console.log(average());
+
+    
+    
+///////////////////
+//// FUNCTIONS ////    
+//////////////////
+    
+/**************** Map *********************/   
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+const upperizedNames = ['Farrin', 'Kagure', 'Asser'].map(
+  name => name.toUpperCase()
+);
+console.log(upperizedNames);
+
+const names = ['Afghanistan', 'Aruba', 'Bahamas', 'Chile', 'Fiji', 'Gabon', 'Luxembourg', 'Nepal', 'Singapore', 'Uganda', 'Zimbabwe'];
+const longNames = names.filter(name => name.length > 6);    
+console.log(longNames);   
+    
+    
+const greet = name => `Hello ${name}!`;
+console.log(greet('tha boss'));
+
+// multiple parameters requires parentheses
+const orderIceCream = (flavor, cone) => console.log(`Here's your ${flavor} ice cream in a ${cone} cone.`);
+orderIceCream('chocolate', 'waffle');    
+    
+const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black'];
+const crazyColors = colors.map( color => color.split('').reverse().join('') + '!' );    
+console.log(crazyColors);
+    
+const squares = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(square => square*square);
+console.log(...squares);    
+
+// default values    
+function shippingLabel(name = 'Richard', address = 'Mountain View') {
+        return `To: ${name} In: ${address}`;
+}
+console.log(shippingLabel());
+console.log(shippingLabel('hugo', 'laval'));
+
+function createSundae({scoops = 1, toppings = ['Hot Fudge']} = {}) {
+  const scoopText = scoops === 1 ? 'scoop' : 'scoops';
+  return `Your sundae has ${scoops} ${scoopText} with ${toppings.join(' and ')} toppings.`;
+}
+
+    const mySundea = createSundae();
+    const myS = createSundae({scoops:3, toppings: ['Cookie Dough']});
+    console.log(mySundea);
+    console.log(myS);                         
+    
+    
+/**************** Class *********************/   
+  class Plane {
+  constructor(numEngines, numWings = 2) {
+    this.numEngines = numEngines;
+    this.enginesActive = false;
+      this.wings = numWings;
+  }
+
+  startEngines() {
+    console.log('starting engines…');
+    this.enginesActive = true;
+  }
+  
+  stopEngines(){
+    console.log('stoping engines…');
+    this.enginesActive = false;      
+      
+  }
+}  
+    
+    const myToy2 = new Plane(2, 4); // this works!
+
+// Extended
+    
+class Tree {
+  constructor(size = '10', leaves = {spring: 'green', summer: 'green', fall: 'orange', winter: null}) {
+    this.size = size;
+    this.leaves = leaves;
+    this.leafColor = null;
+  }
+
+  changeSeason(season) {
+    this.leafColor = this.leaves[season];
+    if (season === 'spring') {
+      this.size += 1;
+    }
+  }
+}
+
+class Maple extends Tree {
+  constructor(syrupQty = 15, size, leaves) {
+    super(size, leaves);
+    this.syrupQty = syrupQty;
+  }
+
+  changeSeason(season) {
+    super.changeSeason(season); // call parent function
+    if (season === 'spring') {
+      this.syrupQty += 1;
+    }
+  }
+
+  gatherSyrup() {
+    this.syrupQty -= 3;
+  }
+}
+
+const myMaple = new Maple(15, 5);
+myMaple.changeSeason('fall');
+myMaple.gatherSyrup();
+myMaple.changeSeason('spring');    
+console.log(myMaple);    
+    
+    
+ class Vehicle {
+	constructor(color = 'blue', wheels = 4, horn = 'beep beep') {
+		this.color = color;
+		this.wheels = wheels;
+		this.horn = horn;
+	}
+
+	honkHorn() {
+		console.log(this.horn);
+	}
+}
+
+class Bicycle extends Vehicle {
+    constructor(color = 'blue', wheels = 2, horn = 'honk honk') {
+    super(color, wheels, horn);
+  }
+    
+    honkHorn() {
+		super.honkHorn(this.horn); // call parent function
+	}
+}
+
+// your code goes here
+
+
+const myVehicle = new Vehicle();
+myVehicle.honkHorn(); // beep beep
+const myBike = new Bicycle();
+myBike.honkHorn(); // honk honk   
+
+
+///////////////////
+//// BUILT-IN /////    
+//////////////////  
+    
+// Symbol    
+const sym1 = Symbol('apple');
+console.log(sym1);    
+
+const bowl = {
+  [Symbol('apple')]: { color: 'red', weight: 136.078 },
+  [Symbol('banana')]: { color: 'yellow', weight: 183.15 },
+  [Symbol('orange')]: { color: 'orange', weight: 170.097 },
+  [Symbol('banana')]: { color: 'yellow', weight: 176.845 }
+};
+console.log(bowl);
+
+// symbol interator    
+const dig = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const arrayIterator = dig[Symbol.iterator]();
+console.log(arrayIterator.next());
+console.log(arrayIterator.next());
+console.log(arrayIterator.next());
+
+// Set
+const games = new Set(['Super Mario Bros.', 'Banjo-Kazooie', 'Mario Kart', 'Super Mario Bros.']);
+console.log(games);
+games.add('Banjo-Tooie');
+games.add('Age of Empires');
+games.delete('Super Mario Bros.');
+console.log(games);
+console.log(games.has('Banjo-Kazooie'));    
+
+// Weak Set
+const student1 = { name: 'James', age: 26, gender: 'male' };
+const student2 = { name: 'Julia', age: 27, gender: 'female' };
+const student3 = { name: 'Richard', age: 31, gender: 'male' };   
+const roster = new WeakSet([student1, student2, student3]);
+console.log(roster);    
+
+// Maps
+const employees = new Map();
+employees.set('james.parkes@udacity.com', { 
+    firstName: 'James',
+    lastName: 'Parkes',
+    role: 'Content Developer' 
+});
+employees.set('julia@udacity.com', {
+    firstName: 'Julia',
+    lastName: 'Van Cleve',
+    role: 'Content Developer'
+});
+employees.set('richard@udacity.com', {
+    firstName: 'Richard',
+    lastName: 'Kalehoff',
+    role: 'Content Developer'
+});
+console.log(employees);   
+employees.delete('julia@udacity.com');
+employees.delete('richard@udacity.com');
+console.log(employees);
+employees.clear(); // remove all
+ 
+const members = new Map();
+
+members.set('Evelyn', 75.68);
+members.set('Liam', 20.16);
+members.set('Sophia', 0);
+members.set('Marcus', 10.25);
+
+console.log(members.has('Xavier'));
+console.log(members.has('Marcus'));    
+console.log(members.get('Evelyn'));
+
+// iterator
+let iteratorObjForKeys = members.keys();
+iteratorObjForKeys.next();   
+ 
+// looping Maps    
+members.forEach((value, key) => console.log(key, value));
+    
+// Weak Map
+const book1 = { title: 'Pride and Prejudice', author: 'Jane Austen' };
+const book2 = { title: 'The Catcher in the Rye', author: 'J.D. Salinger' };
+const book3 = { title: 'Gulliver’s Travels', author: 'Jonathan Swift' };
+
+const library = new WeakMap();
+library.set(book1, true);
+library.set(book2, false);
+library.set(book3, true);
+
+console.log(library);
+    
+// Promises
+const mySundae = new Promise(function (resolve, reject) {
+    window.setTimeout(function createSundae(flavor = 'chocolate') {
+        const sundae = flavor;
+        // request ice cream
+        // get cone
+        // warm up ice cream scoop
+        // scoop generous portion into cone!
+        
+          resolve(sundae);
+    }, Math.random() * 2000);
+});  
+    
+
+    
+mySundae.then(function(sundae) {
+    console.log(`Time to eat my delicious ${sundae}`);
+}, function(msg) {
+    console.log(msg);
+    self.goCry(); // not a real method
+}); 
+    
+    
+    
+// Proxy
+const richard = {status: 'looking for work'};
+const handler = {
+    set(target, propName, value) {
+        if (propName === 'payRate') { // if the pay is being set, take 15% as commission
+            value = value * 0.85;
+        }
+        target[propName] = value;
+    }
+};
+const agent = new Proxy(richard, handler);
+agent.payRate = 1000; // set the actor's pay to $1,000
+console.log(agent.payRate); // $850 the actor's actual pay    
+
+// generator 
+function* createSundae() {
+    const toppings = [];
+
+    toppings.push(yield);
+    toppings.push(yield);
+    toppings.push(yield);
+
+    return toppings;
+}
+
+var it = createSundae();
+it.next('hot fudge');
+it.next('sprinkles');
+it.next('whipped cream');
+it.next();
+ console.log(it);   
+</script>
+
+    
+</body>
+</html>
